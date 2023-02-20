@@ -50,7 +50,9 @@ CREATE TABLE Rental(
 rental_id int UNIQUE IDENTITY (1,1) NOT NULL,
 book_id int NOT NULL,
 member_id int NOT NULL, 
-loan_date datetime NOT NULL
+loan_date datetime NOT NULL,
+member_id int FOREIGN KEY REFERENCES Member(member_id),
+book_id int FOREIGN KEY REFERENCES Book(book_id)
 );
 
 
@@ -58,5 +60,7 @@ CREATE TABLE Book_Genre(
 book_genre_id int UNIQUE IDENTITY (1,1) NOT NULL,
 genre_id int NOT NULL,
 book_id int NOT NULL
+author_id int FOREIGN KEY REFERENCES Author(author_id),
+genre_id int FOREIGN KEY REFERENCES Genre(genre_id)
 );
 
