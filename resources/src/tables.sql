@@ -41,6 +41,8 @@ CREATE TABLE Book_Author(
 book_author_id int UNIQUE IDENTITY (1,1) NOT NULL,
 author_id int NOT NULL
 book_id int NOT NULL,
+author_id int FOREIGN KEY REFERENCES Author(author_id),
+book_id int FOREIGN KEY REFERENCES Book(book_id)
 );
 
 
