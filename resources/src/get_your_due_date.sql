@@ -1,4 +1,4 @@
-CREATE PROCEDURE get_due_date
+CREATE PROCEDURE gets_due_date
 	@book_id INT 
 
 	AS BEGIN DECLARE 
@@ -6,11 +6,11 @@ CREATE PROCEDURE get_due_date
 	@due_date DATE
 
 	SELECT 
-	loan_date
+	@loan_date = loan_date
 	FROM 
 	RENTAL 
 	WHERE 
-	book_id =@book_id
+	book_id =@book_id;
 
 	SET 
 	@due_date = DATEADD(DAY,15,@loan_date)
@@ -19,4 +19,4 @@ CREATE PROCEDURE get_due_date
 
 END
 
----EXEC get_due_date 2;
+EXEC gets_due_date 2;
