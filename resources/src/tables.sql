@@ -1,8 +1,8 @@
 --Thabang Kubheka--
 
-CREATE DATABASE test;
+CREATE DATABASE dev;
 
-use test;
+use dev;
 
 
 CREATE TABLE Author(
@@ -56,6 +56,7 @@ book_id int NOT NULL,
 member_id int NOT NULL, 
 loan_date date NOT NULL,
 due_date date NOT Null,
+return_date date
 );
 
 

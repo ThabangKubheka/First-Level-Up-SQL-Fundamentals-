@@ -1,22 +1,25 @@
-CREATE PROCEDURE calculate_late_fee
+CREATE PROCEDURE calculates_late_fee
 	@rental_id INT 
+	
 	
 	AS BEGIN DECLARE 
 	@due_date DATE,
 	@late_fee MONEY,
-	@loan_date DATE
+	@loan_date DATE,
+	@return_date DATE
 
-	SELECT @loan_date FROM Rental
+	SELECT @loan_date = loan_date,@return_date =return_date FROM Rental
 	where rental_id =@rental_id
 
 	SET 
 	@due_date = DATEADD(DAY,15,@loan_date)
 
-	IF @loan_date < @due_date
+
+	IF @return_date > @due_date
 
 	BEGIN
 	SET 
-	@late_fee = DATEDIFF(DAY,@due_date,@loan_date)*0.50;
+	@late_fee = DATEDIFF(DAY,@due_date,@return_date)*0.50;
 
 
 	PRINT 'The Late fee for the rental is '+ CAST(@rental_id AS VARCHAR) + 'is  R'+CAST(@late_fee AS VARCHAR)
@@ -31,4 +34,5 @@ CREATE PROCEDURE calculate_late_fee
 
 END
 
---EXEC calculate_late_fee 21;
+EXEC calculates_late_fee 2;
+SELECT * FROM Rental;
