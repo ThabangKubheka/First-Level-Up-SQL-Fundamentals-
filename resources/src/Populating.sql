@@ -1,5 +1,5 @@
 --Thabang Kubheka__
-use test;
+use dev;
 
 INSERT INTO Member (firstname, lastname,email_address,cellphone_number,status)
 VALUES ('Claudia','Cole','cole@gmail.com','0765541167','true'),      

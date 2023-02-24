@@ -1,4 +1,4 @@
-CREATE PROCEDURE checkout_book
+CREATE PROCEDURE checkout_books
 @book_id INT,
 @member_id INT
 
@@ -6,41 +6,31 @@ AS
 BEGIN 
 DECLARE 
 @available INT,
-@due_date DATE,
 @loan_date DATE,
-@check INT,
 @return_date DATE
 
 
+
 SELECT
-    @return_date =return_date
+	@return_date = return_date	
 FROM
     Rental
 WHERE
-    book_id = @book_id;
+    member_id = @member_id;
 
 SELECT
-    @available =available
+    @available = available
 FROM
     Book
 WHERE
     book_id = @book_id;
 
 	SET
-	@check =(SELECT
-    COUNT(book_id)
-FROM
-    Rental
-WHERE
-    book_id = @book_id);
-
-	SET
 	@loan_date =GETDATE()
 
-	SET 
-	@due_date = DATEADD(day, 14, @loan_date)
+		
 
-IF (@available > 0) AND (@check<=1) AND (@return_date!=Null) AND (@return_date>@due_date)
+IF (@available > 0) AND (@return_date IS NOT NULL)
 
 BEGIN
 INSERT INTO
@@ -50,7 +40,7 @@ VALUES
         @book_id,
         @member_id,
         @loan_date,
-        @due_date
+        DATEADD(DAY,15,@loan_date)
     );
 	
 UPDATE
@@ -68,13 +58,23 @@ END
 ELSE
 BEGIN
 PRINT
-    'The book you are trying to checkout is not available at the moment'
+    'The book you are trying to checkout is not currently available.'
 END
 
 END
 
 
-
-EXEC checkout_book 1,1
+--book_id,member_id
+EXEC checkout_books 2,7
 
 select * from Rental;
+select * from Book;
+select * from Member;
+
+
+SELECT
+	 return_date	
+FROM
+    Rental
+WHERE
+    return_date IS NOT NULL;
